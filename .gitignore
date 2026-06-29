@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.log
+.DS_Store
+*.zip
+.tmp_*/
+
+# Dữ liệu runtime — không đưa lên GitHub
+data/accounts/*
+!data/accounts/.gitkeep
+data/orders.json
+data/users.json
+data/states.json

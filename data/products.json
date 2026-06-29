@@ -1,0 +1,375 @@
+{
+  "products": [
+    {
+      "id": "veo3_ultra_1m",
+      "name": "VEO3 ULTRA 1 THÁNG",
+      "price": 180000,
+      "emoji": "✅",
+      "description": "Tài khoản VEO3 Ultra dùng riêng 1 tháng, bảo hành 30 ngày."
+    },
+    {
+      "id": "claude_pro_1m",
+      "name": "CLAUDE PRO 1 THÁNG",
+      "price": 180000,
+      "emoji": "✅",
+      "description": "Tài khoản Claude Pro 1 tháng."
+    },
+    {
+      "id": "kling_pro_4k5",
+      "name": "KLING PRO 4500 CREDIT BH7D",
+      "price": 450000,
+      "emoji": "✅",
+      "description": "Tài khoản Kling Pro 4500 Credit. Bảo hành 7 ngày."
+    },
+    {
+      "id": "kling_pro_3k",
+      "name": "KLING PRO 3000 CREDIT BH7D",
+      "price": 420000,
+      "emoji": "✅",
+      "description": "Tài khoản Kling Pro 3000 Credit. Bảo hành 7 ngày."
+    },
+    {
+      "id": "chatgpt_plus_1m_bh24h",
+      "name": "CHATGPT PLUS 1 THÁNG BH 24H",
+      "price": 45000,
+      "emoji": "✅",
+      "description": "Tài khoản ChatGPT Plus 1 Tháng. Bảo hành 24h."
+    },
+    {
+      "id": "chatgpt_plus_1m_bh30d",
+      "name": "CHATGPT PLUS 1 THÁNG BH 30D",
+      "price": 120000,
+      "emoji": "✅",
+      "description": "Tài khoản ChatGPT Plus 1 Tháng. Bảo hành 30 ngày."
+    },
+    {
+      "id": "heygen_creator_1m_bh20d",
+      "name": "HEYGEN CREATOR 1 THÁNG BH 20D",
+      "price": 400000,
+      "emoji": "✅",
+      "description": "Tài khoản Heygen Creator 1 Tháng. Bảo hành 20 ngày."
+    },
+    {
+      "id": "heygen_creator_1m_bh5d",
+      "name": "HEYGEN CREATOR 1 THÁNG BH 5D",
+      "price": 400000,
+      "emoji": "✅",
+      "description": "Tài khoản Heygen Creator 1 Tháng. Bảo hành 5 ngày."
+    },
+    {
+      "id": "veo3_exten_bh20d",
+      "name": "VEO3 EXTEN 0 CRE 25 NGÀY BH 20D",
+      "price": 180000,
+      "emoji": "✅",
+      "description": "Tài khoản Veo3 exten 0 Credit 25 ngày. Thời hạn bảo hành 20 ngày"
+    },
+    {
+      "id": "grok_super_1m_bh5d",
+      "name": "SUPER GROK 30D BH5D",
+      "price": 30000,
+      "emoji": "✅",
+      "description": "Tài khoản Super Grok  30 ngày. Thời hạn bảo hành 5 ngày"
+    },
+    {
+      "id": "grok_super_renew_1m_bhf",
+      "name": "SUPER GROK RENEW 1 THÁNG BHF",
+      "price": 100000,
+      "emoji": "✅",
+      "description": "Tài khoản Super Grok Renew sử dụng 30 ngày. Thời hạn bảo hành full thời gian sử dụng"
+    },
+    {
+      "id": "grok_super_3m_bhf",
+      "name": "SUPER GROK 3 THÁNG BHF",
+      "price": 255000,
+      "emoji": "✅",
+      "description": "Tài khoản Super Grok sử dụng 3 tháng. Thời hạn bảo hành full thời gian sử dụng"
+    },
+    {
+      "id": "claude_maxx20_cc_bh7d",
+      "name": "CLAUDE CHÍNH CHỦ MAX X20 BH 15D",
+      "price": 2100000,
+      "emoji": "✅",
+      "description": "Tài Khoản Claude chính chủ Max x20. Hàng in app. Sau khi thanh toán liên hệ admin"
+    },
+    {
+      "id": "claude_farm_150slot_bh24h",
+      "name": "FARM CLAUDE 150 SLOT BH 24H",
+      "price": 7800000,
+      "emoji": "✅",
+      "description": "Farm Claude 150 slot. Slot gồm Pro + Premier. Bảo hành 24h sau khi mua"
+    },
+    {
+      "id": "kling_66cre",
+      "name": "KLING AI 66 CREDIT ( NO PLAN)",
+      "price": 7000,
+      "emoji": "✅",
+      "description": "Tài khoản Kling AI 66 Credit ( no plan)"
+    },
+    {
+      "id": "kling_1k1cre_bh30d",
+      "name": "KLING AI 1100 CREDIT BH 30D",
+      "price": 140000,
+      "emoji": "✅",
+      "description": "Tài khoản Kling AI 1100 Credit. Bảo hành 30 ngày"
+    },
+    {
+      "id": "kling_ultra_31kcre_bh24h",
+      "name": "KLING ULTRA 31K CREDIT BH 24H",
+      "price": 1100000,
+      "emoji": "✅",
+      "description": "Tài khoản Kling Ultra 31k Credit. Bảo hành 24h sau khi mua"
+    },
+    {
+      "id": "kling_ultra_31kcre_bh7d",
+      "name": "KLING ULTRA 31K CREDIT BH 7D",
+      "price": 1300000,
+      "emoji": "✅",
+      "description": "Tài khoản Kling Ultra 31k Credit. Bảo hành 7 ngày sau khi mua"
+    },
+    {
+      "id": "higg_start_30d_bh24h",
+      "name": "Higg Start 30 Ngày BH 24H",
+      "price": 45000,
+      "emoji": "✅",
+      "description": "Tài khoản Higgsfield Start 30 ngày. Bảo hành 24h"
+    },
+    {
+      "id": "higg_ult_1k8cre_30d_bh5d",
+      "name": "Higg Ultra 1k8 Credit 30D BH 5D",
+      "price": 400000,
+      "emoji": "✅",
+      "description": "Tài khoản Higgsfield Ultra 1k8 Credit dùng trong  30 ngày. Bảo hành 5 ngày"
+    },
+    {
+      "id": "higg_ult_3kcre_30d_bh2d",
+      "name": "Higg Ultra 3K Credit 30D BH 2D",
+      "price": 1000000,
+      "emoji": "✅",
+      "description": "Tài khoản Higgsfield Ultra 3k Credit dùng trong  30 ngày. Bảo hành 2 ngày"
+    },
+    {
+      "id": "higg_ult_9kcre_30d_bh3d",
+      "name": "Higg Ultra 9K Credit 30D BH 3D",
+      "price": 1700000,
+      "emoji": "✅",
+      "description": "Tài khoản Higgsfield Ultra 9k Credit dùng trong  30 ngày. Bảo hành 3 ngày"
+    },
+    {
+      "id": "cc_pro_1m_bhf",
+      "name": "CAPCUT PRO 1 THÁNG BHF",
+      "price": 45000,
+      "emoji": "✅",
+      "description": "Tài Khoản Capcut Pro 1 tháng. Bảo hành full thời gian sử dụng"
+    },
+    {
+      "id": "cc_pro_3m_bhf",
+      "name": "CAPCUT PRO 3 THÁNG BHF",
+      "price": 140000,
+      "emoji": "✅",
+      "description": "Tài Khoản Capcut Pro 3 tháng. Bảo hành full thời gian sử dụng"
+    },
+    {
+      "id": "cc_pro_6m_bhf",
+      "name": "CAPCUT PRO 6 THÁNG BHF",
+      "price": 250000,
+      "emoji": "✅",
+      "description": "Tài Khoản Capcut Pro 6 tháng. Bảo hành full thời gian sử dụng"
+    },
+    {
+      "id": "cc_slot_cc_35d_bhf",
+      "name": "SLOT CAPCUT CHÍNH CHỦ 35 NGÀY BHF",
+      "price": 60000,
+      "emoji": "✅",
+      "description": "• GÓI CAPCUT PRO \r\n•NÂNG MAIL CHÍNH CHỦ\r\n• DATE 35-35 DAYS \r\n• LOGIN WEB CAPCUT :  https://www.capcut.com/vi-vn/login?enter_from=log_out&current_page=work_space\r\n⚠️ !! VUI LÒNG CHỈ SỬ DỤNG 1,2 THIẾT BỊ . LOG NHIỀU THIẾT BỊ SẼ KHÔNG ĐƯỢC BẢO HÀNH !!"
+    },
+    {
+      "id": "chatgpt_edu_2y_bh24h",
+      "name": "CHATGPT PLUS ( EDU) 2 NĂM BH 24H",
+      "price": 140000,
+      "emoji": "✅",
+      "description": "Tài khoản ChatGPT Edu sử dụng 2 năm. Bảo hành 24h"
+    },
+    {
+      "id": "chatgpt_prox20_30d_bh7d",
+      "name": "CHATGPT PRO X20 30D BH7D",
+      "price": 1550000,
+      "emoji": "✅",
+      "description": "Tài khoản ChatGPT Pro x20 sử dụng 30 ngày. Bảo hành 7 ngày"
+    },
+    {
+      "id": "gemini_pro_cdk_1y_kbh",
+      "name": "CDK GEMINI PRO PIXEL 1 NĂM KBH",
+      "price": 35000,
+      "emoji": "✅",
+      "description": "📦 HƯỚNG DẪN KÍCH HOẠT CDK GEMINI PRO & 5TB STORAGE\r\n━━━━━━━━━━━━━━━━━━━━━━━━\r\n1. Truy cập\r\n• https://trialpixel.live (đổi CDK)\r\n2. Chuẩn bị Gmail (bắt buộc)\r\n• Xóa Payments Profile\r\n• Thoát Google Family\r\n• Tài khoản hoạt động bình thường\r\n3. Đăng nhập\r\n• 2FA: GMAIL|PASSWORD|2FA_KEY (Secret Key)\r\n• Hoặc: GMAIL|PASSWORD → bấm Yes trên điện thoại\r\n4. Kích hoạt\r\n• Nhập thông tin + CDK → bấm CLAIM\r\n• Chờ 1–5 phút\r\n• Thành công: Gemini Pro + 5TB\r\n5. Lưu ý\r\n• Lỗi thường: chưa xóa Payment/Family\r\n• Không đổi mật khẩu ngay\r\n• Tránh login nhiều IP\r\n6. Hỗ trợ\r\n• Gửi: CDK + Gmail + ảnh lỗi"
+    },
+    {
+      "id": "gemini_link_18m_kbh",
+      "name": "LINK GEMINI 18 THÁNG KBH",
+      "price": 35000,
+      "emoji": "✅",
+      "description": "Bảo hành link active 1 ngày kể từ lúc mua. \r\n\r\nHướng dẫn sử dụng:\r\nBước 1: Đăng nhập tài khoản google vào\r\nBước 2: Nhấp vào link bot gửi.\r\nBước 3: Nhận offer\r\nSau khi mua xong vui lòng sử dụng liền"
+    },
+    {
+      "id": "gemini_pro_slot5tb_1y_bhf",
+      "name": "SLOT GEMINI PRO + 5TB 12 THÁNG KBH",
+      "price": 120000,
+      "emoji": "✅",
+      "description": "Slot Gemini Pro + 15TB sử dụng 12 tháng. Không bảo hành"
+    },
+    {
+      "id": "freepik_pre_30d_bh14d",
+      "name": "FREEPIK PRE+ 30D BH 14D",
+      "price": 400000,
+      "emoji": "✅",
+      "description": "Tài khoản Freepik sử dụng 30 ngày. Bảo hành 14 ngày"
+    },
+    {
+      "id": "ele_creator_1m_bh5d",
+      "name": "ELEVENLABS CREATOR 1 THÁNG BH 5D",
+      "price": 140000,
+      "emoji": "✅",
+      "description": "Tài khoản Elevenlabs Creator sử dụng 30 ngày. Bảo hành 5 ngày"
+    },
+    {
+      "id": "iqiyi_cc_3m_bhf",
+      "name": "IQIYI CAO CẤP 3 THÁNG BHF",
+      "price": 80000,
+      "emoji": "✅",
+      "description": "Tài khoản IQIYI Cao Cấp 3 thàng. Bảo hành full thời gian sử dụng"
+    },
+    {
+      "id": "xbox_giftcode_random",
+      "name": "XBOX GIFT CODE - NGẪU NHIÊN",
+      "price": 20000,
+      "emoji": "✅",
+      "description": "CODE QUÀ TẶNG NGẪU NHIÊN CỦA XBOX \r\n📌 Đổi mã gift tại đây : https://www.xbox.com/en-IN/redeem\r\n📌 Quà thẻ tặng ngẫu nhiên tỉ lệ cao về game : Diablo, Gta5 , Horizone, Minecraft, Fifa, Call of duty ,..,... rất nhiều game khác - Vật dụng hiếm game - mệnh giá nạp tiền 10$ - 100$\r\n📌 Sau khi nhận mã - truy cập vào link - bấm mã nhận - và bấm Redeem để nhận về tài khoản xbox của bạn\r\n📌đọc kĩ trước khi mua hàng !"
+    },
+    {
+      "id": "xbox_giftcode_random_1m_bh1d",
+      "name": "GIFT XBOX RANDOM 1 THÁNG BH 1 NGÀY",
+      "price": 35000,
+      "emoji": "✅",
+      "description": "Redeem tại: https://www.xbox.com/en-IN/redeem"
+    },
+    {
+      "id": "xbox_game_ult_1y_bh30d",
+      "name": "XBOX GAME ULTIMATE - 1 NĂM BHF",
+      "price": 180000,
+      "emoji": "✅",
+      "description": "Nâng Cấp Xbox Game Pass Ultimate 1 Năm - Vũ Trụ Game Không Giới Hạn - Bảo hành 1 tháng\r\n- Gói này chỉ dành sử dụng cho máy tính\r\n🟥 Sử dụng trên Máy tính - Không thể sử dụng trên Console, Điện thoại\r\n🟥 Không bao gồm Cloud Gaming và các game có launcher thứ 3 như EA, Ubisoft, Activision, GTA, Minecraft\r\n📌Nâng cấp trên tài khoản Chính chủ:  kích hoạt trực tiếp vào tài khoản Microsoft/Xbox cá nhân của bạn. Không dùng chung, bảo mật tuyệt đối, giữ nguyên lịch sử chơi game (Save game) và thành tích (Achievements).\r\n📌Có hướng dẫn sử dụng sau khi mua.\r\n📌 Đọc kĩ trước khi mua hàng !\r\n-------------------------------\r\n🌟 Đặc quyền \"Vô cực\" khi sở hữu Xbox Game Pass Ultimate:\r\n📌Thư viện hàng trăm game đỉnh cao: Truy cập tự do vào kho tàng hơn 400+ tựa game chất lượng cao trên cả PC (Windows 10/11) . Từ game nhập vai, bắn súng, đua xe đến game gia đình giải trí."
+    },
+    {
+      "id": "duo_super_1m_bh1d",
+      "name": "Doulingo Super 1 THÁNG BH 1D",
+      "price": 18000,
+      "emoji": "✅",
+      "description": "Tài khoản Duolingo Super  1 tháng, bảo hành 1 ngày\r\nĐăng nhập bằng tài khoản và mật khẩu"
+    },
+    {
+      "id": "duo_super_1y_bhf",
+      "name": "Doulingo Super 1 NĂM  KBH",
+      "price": 180000,
+      "emoji": "✅",
+      "description": "Super Duolingo 1 Năm (Nâng Cấp Chính Chủ ) Trải nghiệm học ngoại ngữ mượt mà, hiệu quả và không giới hạn 📌 Tài khoản nâng chính chủ - Bảo hành full"
+    },
+    {
+      "id": "canva_pro_slot_bh1y",
+      "name": "CANVA PRO SLOT BH 12 THÁNG",
+      "price": 55000,
+      "emoji": "✅",
+      "description": "GÓI CAVAN PRO 12 THÁNG . BẢO HÀNH FULL \r\n• SAU KHI THANH TOÁN GỬI GMAIL \r\n• LOGIN TẠI WEB \" https://www.canva.com/ \r\n📧 Vui lòng nhập email để nhận slot (mỗi dòng 1 email).\r\n💡 Số lượng sẽ được tính tự động theo số email bạn nhập.\r\n\r\nVí dụ:\r\nuser1@gmail.com\r\nuser2@gmail.com"
+    },
+    {
+      "id": "canva_pro_fam_50slot_bh1y",
+      "name": "FAM CANVA PRO 50 SLOT BH 1 NĂM",
+      "price": 1800000,
+      "emoji": "✅",
+      "description": "ADMIN CANVA PRO 50 SLOT"
+    },
+    {
+      "id": "mic365_slot_pre_1y",
+      "name": "SLOT MICRO OFF 365 PRE 12T",
+      "price": 100000,
+      "emoji": "✅",
+      "description": "Order xong gửi mail vào bot theo hướng dẫn để được nâng cấp, sau khi bot thông báo hoàn thành thì vào mail check tham gia lời mời\r\nCần hỗ trợ liên hệ Admin\r\n📧 Vui lòng nhập email để nhận slot (mỗi dòng 1 email).\r\n💡 Số lượng sẽ được tính tự động theo số email bạn nhập.\r\n\r\nVí dụ:\r\nuser1@gmail.com\r\nuser2@gmail.com"
+    },
+    {
+      "id": "picsart_pro_1y_bhf",
+      "name": "Picsart Pro 1 NĂM BHF",
+      "price": 300000,
+      "emoji": "✅",
+      "description": "Tài Khoản Picsart Pro 1 Năm (Gói 200 AI Credits) - Bảo Hành 1 năm \r\nMở khóa sức mạnh sáng tạo vô hạn với Picsart Pro! Biến những bức ảnh và video bình thường thành các tác phẩm nghệ thuật chuyên nghiệp chỉ với vài thao tác đơn giản. Đặc biệt, gói này đi kèm 200 AI Credits để bạn trải nghiệm các công cụ Trí tuệ nhân tạo tiên tiến nhất của Picsart."
+    },
+    {
+      "id": "youtube_pre_slot_1y",
+      "name": "SLOT YOUTUBE PREMIUM 12 THÁNG",
+      "price": 390000,
+      "emoji": "✅",
+      "description": "Order xong gởi mail vào bot để được nâng cấp trong 5s \r\nKhông tự ý rời nhóm gia đình, nếu rời sẽ không được bảo hành.\r\nHỗ trợ fix lỗi 12 tháng trong quá trình sử dụng,\r\nHàng KHÔNG ĐỔI FAM\r\n📧 Vui lòng nhập email để nhận slot (mỗi dòng 1 email).\r\n💡 Số lượng sẽ được tính tự động theo số email bạn nhập.\r\n\r\nVí dụ:\r\nuser1@gmail.com\r\nuser2@gmail.com"
+    },
+    {
+      "id": "figma_pro_1y_bhf",
+      "name": "FIGMA PRO 1 NĂM BHF",
+      "price": 180000,
+      "emoji": "✅",
+      "description": "Gói cước: Education ( Full Tính năng Pro) Bảo hành: 365 ngày"
+    },
+    {
+      "id": "youku_vip_3m_bhf",
+      "name": "YOUKU VIP 3 THÁNG BHF",
+      "price": 70000,
+      "emoji": "✅",
+      "description": "Tài khoản youku vip dùng 1 thiết bị (1 slot)"
+    },
+    {
+      "id": "hma_vpn_1m_bh30d",
+      "name": "TÀI KHOẢN HMA VPN 1 THÁNG BH 30D",
+      "price": 30000,
+      "emoji": "✅",
+      "description": "Mail Pass giống nhau"
+    },
+    {
+      "id": "notion_plus_1y_bhf",
+      "name": "NOTION PLUS 1 NĂM BHF",
+      "price": 200000,
+      "emoji": "✅",
+      "description": "Notion Plus nâng chính chủ Bảo hành: 365 ngày : đặt hàng xong nhắn tin cho : admin  , hàng Education"
+    },
+    {
+      "id": "zoom_pro_28d_bhf",
+      "name": "ZOOM PRO - 28D BHF",
+      "price": 60000,
+      "emoji": "✅",
+      "description": "Gói ACC RIÊNG, cung cấp đầy đủ tính năng Zoom Pro như họp không giới hạn thời gian, tối đa 100 người tham gia, hỗ trợ ghi hình và quản lý cuộc họp chuyên nghiệp."
+    },
+    {
+      "id": "scribd_pre_1m_bhf",
+      "name": "SCRIBD PREMIUM 1 THÁNG BHF",
+      "price": 60000,
+      "emoji": "✅",
+      "description": "Scribd là một ứng dụng đọc sách và tài liệu trực tuyến, cho phép bạn truy cập kho nội dung khổng lồ gồm ebook, sách nói, tạp chí và tài liệu học tập.\r\n📌 Tài khoản cấp riêng - BHF"
+    },
+    {
+      "id": "hotmail",
+      "name": "HOTMAIL",
+      "price": 7000,
+      "emoji": "✅",
+      "description": "Login trực tiếp rồi thêm mail khôi phục"
+    },
+    {
+      "id": "express_vpn_30d_bhf",
+      "name": "VPN EXPRESS VPN 30D BHF",
+      "price": 20000,
+      "emoji": "✅",
+      "description": "VPN  EXPRESS VPN 30 ngày Bảo Hành Full\r\nĐịng dạng: Mail mail (key giống pass)"
+    },
+    {
+      "id": "crunch_1m_bh20d",
+      "name": "CRUNCHYROLL 1 THÁNG BH 20D",
+      "price": 55000,
+      "emoji": "✅",
+      "description": "🍥 CRUNCHYROLL MEGA FAN – THIÊN ĐƯỜNG ANIME 🍥\r\nCrunchyroll là nền tảng xem Anime và phim truyền hình châu Á hàng đầu thế giới với kho nội dung phong phú, chất lượng cao \r\n🔥 Xem Anime mượt mà – Không quảng cáo !\r\n---------------------------------------------\r\n📌 Tài khoản cấp - Sử dụng riêng - đúng slot yêu cầu \r\n🛡️ Bảo hành: 20 ngày\r\n📱 Đăng nhập tối đa: 2 thiết bị (1 điện thoại + 1 máy tính)\r\n❌ Không hoàn tiền sau khi giao tài khoản. \r\n📌 Vui Lòng đọc kĩ mô tả hàng trước khi mua !\r\n⚠️ Lưu ý:\r\n\r\nKhông đăng nhập vượt quá số lượng thiết bị quy định.\r\nShop sẽ không bảo hành đối với các trường hợp đăng nhập quá số thiết bị yêu cầu hoặc vi phạm quy định sử dụng tài khoản."
+    }
+  ]
+}
