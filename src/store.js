@@ -66,8 +66,14 @@ function getProduct(productId) {
 
 // ---------- Account stock (text files) ----------
 
+// Tìm file kho cho 1 sản phẩm. Chấp nhận cả 2 dạng tên file:
+// không đuôi (ưu tiên) và có đuôi .txt. File tạo mới dùng dạng không đuôi.
 function accountFile(productId) {
-  return path.join(ACCOUNTS_DIR, `${productId}.txt`);
+  const noext = path.join(ACCOUNTS_DIR, productId);
+  const txt = path.join(ACCOUNTS_DIR, `${productId}.txt`);
+  if (fs.existsSync(noext)) return noext;
+  if (fs.existsSync(txt)) return txt;
+  return noext;
 }
 
 function readAccountLines(productId) {
@@ -113,13 +119,16 @@ function popAccounts(productId, quantity) {
   return taken;
 }
 
-// Danh sách id (tên file không đuôi) của tất cả file kho hiện có
+// Danh sách id của tất cả file kho hiện có (gộp cả 2 dạng tên file).
 function listAccountIds() {
   if (!fs.existsSync(ACCOUNTS_DIR)) return [];
-  return fs
-    .readdirSync(ACCOUNTS_DIR)
-    .filter((f) => f.toLowerCase().endsWith('.txt'))
-    .map((f) => f.replace(/\.txt$/i, ''));
+  const set = new Set();
+  for (const f of fs.readdirSync(ACCOUNTS_DIR)) {
+    if (f.startsWith('.')) continue; // bỏ .gitkeep
+    if (f.toLowerCase().endsWith('.tmp')) continue; // bỏ file tạm
+    set.add(f.replace(/\.txt$/i, ''));
+  }
+  return [...set];
 }
 
 // Xóa hẳn 1 file kho theo id. Trả về true nếu đã xóa.
