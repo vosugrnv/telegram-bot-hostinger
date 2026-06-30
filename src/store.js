@@ -113,6 +113,25 @@ function popAccounts(productId, quantity) {
   return taken;
 }
 
+// Danh sách id (tên file không đuôi) của tất cả file kho hiện có
+function listAccountIds() {
+  if (!fs.existsSync(ACCOUNTS_DIR)) return [];
+  return fs
+    .readdirSync(ACCOUNTS_DIR)
+    .filter((f) => f.toLowerCase().endsWith('.txt'))
+    .map((f) => f.replace(/\.txt$/i, ''));
+}
+
+// Xóa hẳn 1 file kho theo id. Trả về true nếu đã xóa.
+function deleteAccountFile(productId) {
+  const file = accountFile(productId);
+  if (fs.existsSync(file)) {
+    fs.unlinkSync(file);
+    return true;
+  }
+  return false;
+}
+
 // ---------- Orders ----------
 
 function getOrders() {
@@ -249,6 +268,8 @@ module.exports = {
   physicalStock,
   availableStock,
   popAccounts,
+  listAccountIds,
+  deleteAccountFile,
   addOrder,
   getOrder,
   updateOrder,

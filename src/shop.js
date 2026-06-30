@@ -151,6 +151,41 @@ function registerShop(bot) {
     );
   });
 
+  // ---- Admin: dọn file kho không còn trong products.json ----
+  bot.command('dondep', async (ctx) => {
+    if (!isAdmin(ctx.from.id)) return;
+
+    const validIds = new Set(store.getProducts().map((p) => p.id));
+    // An toàn: nếu products.json lỗi/rỗng thì KHÔNG xóa gì cả
+    if (validIds.size === 0) {
+      return ctx.replyWithHTML(
+        '⚠️ <b>Không dọn được.</b>\n' +
+          'products.json đang trống hoặc lỗi (0 sản phẩm). ' +
+          'Kiểm tra lại file rồi thử lại để tránh xóa nhầm kho.'
+      );
+    }
+
+    const orphans = store.listAccountIds().filter((id) => !validIds.has(id));
+    if (orphans.length === 0) {
+      return ctx.replyWithHTML(
+        `✅ Kho đã sạch. Tất cả file đều khớp ${validIds.size} sản phẩm.`
+      );
+    }
+
+    let deleted = 0;
+    for (const id of orphans) {
+      if (store.deleteAccountFile(id)) deleted += 1;
+    }
+
+    const list = orphans.map((id) => `• ${escapeHtml(id)}.txt`).join('\n');
+    await ctx.replyWithHTML(
+      `🧹 <b>Đã dọn ${deleted} file kho cũ</b> (không còn trong sản phẩm):\n\n` +
+        `${list}\n\n` +
+        `📦 Còn lại: <b>${store.listAccountIds().length}</b> file kho khớp ` +
+        `<b>${validIds.size}</b> sản phẩm.`
+    );
+  });
+
   bot.start(async (ctx) => {
     store.updateUser(ctx.from.id, {
       firstName: ctx.from.first_name || '',
