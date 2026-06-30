@@ -6,6 +6,7 @@ const { Telegraf } = require('telegraf');
 const { registerShop, startPaymentWatcher, fulfillByOrderCode } = require('./src/shop');
 const store = require('./src/store');
 const payos = require('./src/payos');
+const admin = require('./src/admin');
 
 const PAYOS_WEBHOOK_PATH = '/payos-webhook';
 
@@ -70,6 +71,7 @@ async function startWebhook() {
       res.end(`OK - ${botName} dang chay (webhook)`);
       return;
     }
+    if (admin.handle(req, res)) return;
     res.writeHead(404);
     res.end('Not found');
   });
@@ -135,6 +137,7 @@ function startHealthServer() {
       res.end(`OK - ${botName} dang chay (polling)`);
       return;
     }
+    if (admin.handle(req, res)) return;
     res.writeHead(404);
     res.end('Not found');
   });

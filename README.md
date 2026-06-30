@@ -1,6 +1,6 @@
 # Telegram Shop Bot — PayOS + Hostinger
 
-Bot Telegram bán tài khoản tự động: menu mua hàng, chọn số lượng, thanh toán **PayOS** (QR điền sẵn số tiền) hoặc **ví nội bộ**, tự động giao tài khoản và trừ kho khi nhận được tiền. Chạy **polling** (không cần domain HTTPS), phù hợp Hostinger.
+Bot Telegram bán tài khoản tự động: menu mua hàng, chọn số lượng, thanh toán **PayOS** (QR điền sẵn số tiền) hoặc **ví nội bộ**, tự động giao tài khoản và trừ kho khi nhận được tiền. Chạy **webhook** trên Hostinger.
 
 ## Tính năng
 
@@ -11,6 +11,7 @@ Bot Telegram bán tài khoản tự động: menu mua hàng, chọn số lượn
 - Tự động kiểm tra thanh toán (10 giây/lần) → giao tài khoản, **xóa tài khoản đã bán khỏi file**, cập nhật tồn kho
 - Đơn quá **15 phút** chưa thanh toán → tự hủy (khách đặt lại từ đầu)
 - Nạp tiền vào ví qua PayOS
+- **Admin Web Panel** tại `/admin`: quản lý sản phẩm, kho tài khoản, đơn hàng, upload ảnh sản phẩm
 
 ## Cấu trúc
 
@@ -26,7 +27,8 @@ telegram-bot-hostinger/
 ├── data/
 │   ├── products.json     # Danh mục sản phẩm
 │   ├── accounts/
-│   │   └── <id>.txt       # Kho tài khoản (mỗi dòng 1 tài khoản)
+│   │   └── <id>           # Kho tài khoản (mỗi dòng 1 tài khoản)
+│   ├── images/            # Ảnh sản phẩm theo id (id.jpg/png/webp)
 │   ├── orders.json       # Đơn hàng
 │   └── users.json        # Ví người dùng
 ├── package.json
@@ -44,6 +46,8 @@ cp .env.example .env
 | `BOT_TOKEN` | ✅ | Token từ @BotFather |
 | `BOT_NAME` | | Tên bot hiển thị |
 | `SUPPORT_CONTACT` | | Liên hệ hỗ trợ (vd `@admin`) |
+| `ADMIN_PASSWORD` | ✅* | Mật khẩu đăng nhập trang quản trị `/admin` |
+| `DATA_DIR` | | Đường dẫn thư mục data bền vững (khuyến nghị đặt ngoài thư mục app) |
 | `PAYOS_CLIENT_ID` | ✅* | PayOS → Kênh thanh toán → Thông tin xác thực |
 | `PAYOS_API_KEY` | ✅* | |
 | `PAYOS_CHECKSUM_KEY` | ✅* | |
@@ -64,7 +68,7 @@ cp .env.example .env
 }
 ```
 
-**Nạp kho tài khoản** — tạo file `data/accounts/<id>.txt`, mỗi dòng 1 tài khoản (id phải khớp `products.json`):
+**Nạp kho tài khoản** — tạo file `data/accounts/<id>`, mỗi dòng 1 tài khoản (id phải khớp `products.json`):
 
 ```
 email01@mail.com|matkhau01
@@ -99,13 +103,24 @@ npm start
    [OK] Bộ theo dõi thanh toán đã chạy (mỗi 10s)
    ```
 
+## Admin Web Panel
+
+- URL: `https://<domain>/admin`
+- Đăng nhập bằng `ADMIN_PASSWORD`
+- Chức năng:
+  - Tab **Sản phẩm**: thêm/sửa/xóa sản phẩm
+  - Tab **Kho**: thêm tiếp hoặc ghi đè tài khoản theo từng sản phẩm, upload ảnh
+  - Tab **Đơn hàng**: xem mã đơn, khách mua, sản phẩm, số lượng, giá trị, thời gian, tài khoản đã giao
+
 ## ⚠️ Lưu ý quan trọng về dữ liệu
 
 Mỗi lần **redeploy/upload zip mới sẽ GHI ĐÈ** thư mục `data/` → mất kho đã bán, ví, lịch sử.
 
 Khuyến nghị:
-- **Sửa kho trực tiếp** bằng **File Manager** trên Hostinger (không upload đè `data/`), hoặc
-- Khi cần cập nhật code, chỉ zip `index.js`, `src/`, `package*.json` (bỏ `data/`), rồi upload — để giữ nguyên `data/` trên server.
+- Đặt `DATA_DIR` ra ngoài thư mục app để tránh mất dữ liệu khi redeploy.
+  - Ví dụ `DATA_DIR=/home/<username>/bot-data`
+  - Chuyển toàn bộ thư mục `nodejs/data/` sang đường dẫn đó, rồi restart app.
+- Khi cần cập nhật code, chỉ zip `index.js`, `src/`, `package*.json` (bỏ `data/`) để không ghi đè dữ liệu.
 - Với quy mô lớn nên chuyển sang database (MySQL/Postgres) thay cho file JSON.
 
 ## Bảo mật

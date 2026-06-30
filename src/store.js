@@ -35,6 +35,12 @@ function ensureDirs() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
   if (!fs.existsSync(ACCOUNTS_DIR)) fs.mkdirSync(ACCOUNTS_DIR, { recursive: true });
   if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
+
+  // Seed file rỗng để app luôn chạy được trên DATA_DIR mới
+  if (!fs.existsSync(PRODUCTS_FILE)) writeJson(PRODUCTS_FILE, { products: [] });
+  if (!fs.existsSync(ORDERS_FILE)) writeJson(ORDERS_FILE, { orders: [] });
+  if (!fs.existsSync(USERS_FILE)) writeJson(USERS_FILE, { users: {} });
+  if (!fs.existsSync(STATES_FILE)) writeJson(STATES_FILE, { states: {} });
 }
 
 function readJson(file, fallback) {
@@ -66,6 +72,35 @@ function getProduct(productId) {
   return getProducts().find((p) => p.id === productId) || null;
 }
 
+function saveProducts(products) {
+  writeJson(PRODUCTS_FILE, { products });
+}
+
+function addProduct(product) {
+  const products = getProducts();
+  if (products.some((p) => p.id === product.id)) return null;
+  products.push(product);
+  saveProducts(products);
+  return product;
+}
+
+function updateProduct(productId, patch) {
+  const products = getProducts();
+  const idx = products.findIndex((p) => p.id === productId);
+  if (idx === -1) return null;
+  products[idx] = { ...products[idx], ...patch };
+  saveProducts(products);
+  return products[idx];
+}
+
+function deleteProduct(productId) {
+  const products = getProducts();
+  const next = products.filter((p) => p.id !== productId);
+  if (next.length === products.length) return false;
+  saveProducts(next);
+  return true;
+}
+
 // Tìm ảnh sản phẩm trong data/images/. Trả về đường dẫn file cục bộ nếu có,
 // hỗ trợ các đuôi phổ biến: .jpg .jpeg .png .webp. Không có thì trả về null.
 function productImage(productId) {
@@ -75,6 +110,22 @@ function productImage(productId) {
     if (fs.existsSync(file)) return file;
   }
   return null;
+}
+
+function saveProductImage(productId, ext, buffer) {
+  const safeExt = String(ext || '').toLowerCase();
+  if (!['jpg', 'jpeg', 'png', 'webp'].includes(safeExt)) return null;
+
+  for (const oldExt of ['jpg', 'jpeg', 'png', 'webp']) {
+    const oldFile = path.join(IMAGES_DIR, `${productId}.${oldExt}`);
+    if (fs.existsSync(oldFile) && oldExt !== safeExt) fs.unlinkSync(oldFile);
+  }
+
+  const file = path.join(IMAGES_DIR, `${productId}.${safeExt}`);
+  const tmp = `${file}.tmp`;
+  fs.writeFileSync(tmp, buffer);
+  fs.renameSync(tmp, file);
+  return file;
 }
 
 // ---------- Account stock (text files) ----------
@@ -104,6 +155,12 @@ function writeAccountLines(productId, lines) {
   const tmp = `${file}.tmp`;
   fs.writeFileSync(tmp, lines.join('\n') + (lines.length ? '\n' : ''));
   fs.renameSync(tmp, file);
+}
+
+function appendAccountLines(productId, lines) {
+  const current = readAccountLines(productId);
+  const more = (lines || []).map((l) => String(l).trim()).filter(Boolean);
+  writeAccountLines(productId, [...current, ...more]);
 }
 
 // Số lượng vật lý trong file
@@ -294,7 +351,15 @@ module.exports = {
   clearState,
   getProducts,
   getProduct,
+  saveProducts,
+  addProduct,
+  updateProduct,
+  deleteProduct,
   productImage,
+  saveProductImage,
+  readAccountLines,
+  writeAccountLines,
+  appendAccountLines,
   physicalStock,
   availableStock,
   popAccounts,
@@ -307,6 +372,7 @@ module.exports = {
   getPendingOrders,
   getUserOrders,
   soldCount,
+  getUsers,
   getUser,
   getAllUserIds,
   updateUser,
