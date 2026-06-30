@@ -15,25 +15,25 @@
       "description": "Tài khoản Claude Pro 1 tháng."
     },
     {
-      "id": "kling_pro_4k5",
-      "name": "KLING PRO 4500 CREDIT BH7D",
-      "price": 450000,
+      "id": "tradingview_pre_1m_bhf",
+      "name": "TRADINGVIEW PREMIUM 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản Kling Pro 4500 Credit. Bảo hành 7 ngày."
+      "description": "Tài khoản Tradingview Premium 1 tháng. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "kling_pro_3k",
-      "name": "KLING PRO 3000 CREDIT BH7D",
-      "price": 420000,
+      "id": "cursor_pro_1m_bhf",
+      "name": "CURSOR PRO 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản Kling Pro 3000 Credit. Bảo hành 7 ngày."
+      "description": "Tài khoản Cursor Pro 1 tháng. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "chatgpt_plus_1m_bh24h",
-      "name": "CHATGPT PLUS 1 THÁNG BH 24H",
-      "price": 45000,
+      "id": "netflix_pre_1m_bhf",
+      "name": "NETFLIX PREMIUM 1 THÁNG BHF",
+      "price": 50000,
       "emoji": "✅",
-      "description": "Tài khoản ChatGPT Plus 1 Tháng. Bảo hành 24h."
+      "description": "Tài khoản Netflix Premium 1 Tháng. Bảo hành full thời gian sử dụng."
     },
     {
       "id": "chatgpt_plus_1m_bh30d",
@@ -45,37 +45,37 @@
     {
       "id": "heygen_creator_1m_bh20d",
       "name": "HEYGEN CREATOR 1 THÁNG BH 20D",
-      "price": 400000,
+      "price": 200000,
       "emoji": "✅",
       "description": "Tài khoản Heygen Creator 1 Tháng. Bảo hành 20 ngày."
     },
     {
-      "id": "heygen_creator_1m_bh5d",
-      "name": "HEYGEN CREATOR 1 THÁNG BH 5D",
-      "price": 400000,
+      "id": "spotify_pre_1m_bhf",
+      "name": "SPOTIFY PREMIUM 1 THÁNG BHF",
+      "price": 50000,
       "emoji": "✅",
       "description": "Tài khoản Heygen Creator 1 Tháng. Bảo hành 5 ngày."
     },
     {
-      "id": "veo3_exten_bh20d",
-      "name": "VEO3 EXTEN 0 CRE 25 NGÀY BH 20D",
-      "price": 180000,
+      "id": "midjourney_standard_1m_bhf",
+      "name": "MIDJOURNEY STANDARD 1 THÁNG BHF",
+      "price": 99000,
       "emoji": "✅",
-      "description": "Tài khoản Veo3 exten 0 Credit 25 ngày. Thời hạn bảo hành 20 ngày"
+      "description": "Tài khoản Midjourney Standard 1 tháng. Thời hạn bảo hành 1 tháng"
     },
     {
-      "id": "grok_super_1m_bh5d",
-      "name": "SUPER GROK 30D BH5D",
-      "price": 30000,
+      "id": "perplexity_pro_1m_bhf",
+      "name": "PERPLEXITY PRO 1 THÁNG BHF",
+      "price": 99000,
       "emoji": "✅",
-      "description": "Tài khoản Super Grok  30 ngày. Thời hạn bảo hành 5 ngày"
+      "description": "Tài khoản Perplexity Pro 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
-      "id": "grok_super_renew_1m_bhf",
-      "name": "SUPER GROK RENEW 1 THÁNG BHF",
+      "id": "grok_super_1m_bhf",
+      "name": "SUPER GROK 1 THÁNG BHF",
       "price": 100000,
       "emoji": "✅",
-      "description": "Tài khoản Super Grok Renew sử dụng 30 ngày. Thời hạn bảo hành full thời gian sử dụng"
+      "description": "Tài khoản Super Grok sử dụng 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
       "id": "grok_super_3m_bhf",
@@ -85,25 +85,25 @@
       "description": "Tài khoản Super Grok sử dụng 3 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
-      "id": "claude_maxx20_cc_bh7d",
-      "name": "CLAUDE CHÍNH CHỦ MAX X20 BH 15D",
-      "price": 2100000,
+      "id": "vieon_vip_1m_bhf",
+      "name": "VIEON VIP 1 THÁNG BHF",
+      "price": 50000,
       "emoji": "✅",
-      "description": "Tài Khoản Claude chính chủ Max x20. Hàng in app. Sau khi thanh toán liên hệ admin"
+      "description": "Tài Khoản Vieon VIP 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
-      "id": "claude_farm_150slot_bh24h",
-      "name": "FARM CLAUDE 150 SLOT BH 24H",
-      "price": 7800000,
+      "id": "hailou_starter_1m_bhf",
+      "name": "HAILOU STARTER 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Farm Claude 150 slot. Slot gồm Pro + Premier. Bảo hành 24h sau khi mua"
+      "description": "Tài khoản Hailou Starter. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "kling_66cre",
-      "name": "KLING AI 66 CREDIT ( NO PLAN)",
-      "price": 7000,
+      "id": "adobe_creative_1m_bhf",
+      "name": "ADOBE CREATIVE CLOUD 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản Kling AI 66 Credit ( no plan)"
+      "description": "Tài khoản Adobe Creative Cloud 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
       "id": "kling_1k1cre_bh30d",
@@ -113,46 +113,46 @@
       "description": "Tài khoản Kling AI 1100 Credit. Bảo hành 30 ngày"
     },
     {
-      "id": "kling_ultra_31kcre_bh24h",
-      "name": "KLING ULTRA 31K CREDIT BH 24H",
-      "price": 1100000,
+      "id": "meitu_vip_1m_bhf",
+      "name": "MEITU VIP 1 THÁNG BHF",
+      "price": 50000,
       "emoji": "✅",
-      "description": "Tài khoản Kling Ultra 31k Credit. Bảo hành 24h sau khi mua"
+      "description": "Tài khoản Meitu VIP 1 tháng. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "kling_ultra_31kcre_bh7d",
-      "name": "KLING ULTRA 31K CREDIT BH 7D",
-      "price": 1300000,
+      "id": "suno_pro_1m_bhf",
+      "name": "SUNO PRO 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản Kling Ultra 31k Credit. Bảo hành 7 ngày sau khi mua"
+      "description": "Tài khoản Suno Pro. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "higg_start_30d_bh24h",
-      "name": "Higg Start 30 Ngày BH 24H",
-      "price": 45000,
+      "id": "higg_start_30d_bhf",
+      "name": "Higg Start 30 Ngày BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản Higgsfield Start 30 ngày. Bảo hành 24h"
+      "description": "Tài khoản Higgsfield Start 30 ngày. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "higg_ult_1k8cre_30d_bh5d",
-      "name": "Higg Ultra 1k8 Credit 30D BH 5D",
-      "price": 400000,
+      "id": "colipot_pro_1m_bhf",
+      "name": "MICROSOFT COLIPOT PRO 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản Higgsfield Ultra 1k8 Credit dùng trong  30 ngày. Bảo hành 5 ngày"
+      "description": "Tài khoản Microsoft Colipot Pro 1 tháng. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "higg_ult_3kcre_30d_bh2d",
-      "name": "Higg Ultra 3K Credit 30D BH 2D",
+      "id": "turnitin_pro_1m_bhf",
+      "name": "TURNITIN PRO 1 THÁNG BHF",
       "price": 1000000,
       "emoji": "✅",
-      "description": "Tài khoản Higgsfield Ultra 3k Credit dùng trong  30 ngày. Bảo hành 2 ngày"
+      "description": "Tài khoản Turnitin Pro 1 tháng. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "higg_ult_9kcre_30d_bh3d",
-      "name": "Higg Ultra 9K Credit 30D BH 3D",
-      "price": 1700000,
+      "id": "runway_pro_1m_bhf",
+      "name": "RUNWAY AI PRO 1 THÁNG BHF",
+      "price": 99000,
       "emoji": "✅",
-      "description": "Tài khoản Higgsfield Ultra 9k Credit dùng trong  30 ngày. Bảo hành 3 ngày"
+      "description": "Tài khoản Runway AI Pro 1 tháng. Bảo hành full thời gian sử dụng"
     },
     {
       "id": "cc_pro_1m_bhf",
@@ -176,32 +176,32 @@
       "description": "Tài Khoản Capcut Pro 6 tháng. Bảo hành full thời gian sử dụng"
     },
     {
-      "id": "cc_slot_cc_35d_bhf",
-      "name": "SLOT CAPCUT CHÍNH CHỦ 35 NGÀY BHF",
-      "price": 60000,
+      "id": "monica_pro_1m_bhf",
+      "name": "MONICA PRO 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "• GÓI CAPCUT PRO \r\n•NÂNG MAIL CHÍNH CHỦ\r\n• DATE 35-35 DAYS \r\n• LOGIN WEB CAPCUT :  https://www.capcut.com/vi-vn/login?enter_from=log_out&current_page=work_space\r\n⚠️ !! VUI LÒNG CHỈ SỬ DỤNG 1,2 THIẾT BỊ . LOG NHIỀU THIẾT BỊ SẼ KHÔNG ĐƯỢC BẢO HÀNH !!"
+      "description": "Tài khoản Monica Pro 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
-      "id": "chatgpt_edu_2y_bh24h",
-      "name": "CHATGPT PLUS ( EDU) 2 NĂM BH 24H",
-      "price": 140000,
+      "id": "locket_gold_1m_bhf",
+      "name": "LOCKET GOLD 1 THÁNG BHF",
+      "price": 50000,
       "emoji": "✅",
-      "description": "Tài khoản ChatGPT Edu sử dụng 2 năm. Bảo hành 24h"
+      "description": "Tài khoản Locket Gold 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
-      "id": "chatgpt_prox20_30d_bh7d",
-      "name": "CHATGPT PRO X20 30D BH7D",
-      "price": 1550000,
+      "id": "vidu_standard_1m_bhf",
+      "name": "VIDU AI STANDARD 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Tài khoản ChatGPT Pro x20 sử dụng 30 ngày. Bảo hành 7 ngày"
+      "description": "Tài khoản Vidu AI Standard 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
-      "id": "gemini_pro_cdk_1y_kbh",
-      "name": "CDK GEMINI PRO PIXEL 1 NĂM KBH",
-      "price": 35000,
+      "id": "vbee_tieuchuan_1m_bhf",
+      "name": "VBEE GÓI TIÊU CHUẨN 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "📦 HƯỚNG DẪN KÍCH HOẠT CDK GEMINI PRO & 5TB STORAGE\r\n━━━━━━━━━━━━━━━━━━━━━━━━\r\n1. Truy cập\r\n• https://trialpixel.live (đổi CDK)\r\n2. Chuẩn bị Gmail (bắt buộc)\r\n• Xóa Payments Profile\r\n• Thoát Google Family\r\n• Tài khoản hoạt động bình thường\r\n3. Đăng nhập\r\n• 2FA: GMAIL|PASSWORD|2FA_KEY (Secret Key)\r\n• Hoặc: GMAIL|PASSWORD → bấm Yes trên điện thoại\r\n4. Kích hoạt\r\n• Nhập thông tin + CDK → bấm CLAIM\r\n• Chờ 1–5 phút\r\n• Thành công: Gemini Pro + 5TB\r\n5. Lưu ý\r\n• Lỗi thường: chưa xóa Payment/Family\r\n• Không đổi mật khẩu ngay\r\n• Tránh login nhiều IP\r\n6. Hỗ trợ\r\n• Gửi: CDK + Gmail + ảnh lỗi"
+      "description": "Tài khoản Vbee gói Tiêu chuẩn 1 tháng. Thời hạn bảo hành full thời gian sử dung"
     },
     {
       "id": "gemini_link_18m_kbh",
@@ -211,11 +211,11 @@
       "description": "Bảo hành link active 1 ngày kể từ lúc mua. \r\n\r\nHướng dẫn sử dụng:\r\nBước 1: Đăng nhập tài khoản google vào\r\nBước 2: Nhấp vào link bot gửi.\r\nBước 3: Nhận offer\r\nSau khi mua xong vui lòng sử dụng liền"
     },
     {
-      "id": "gemini_pro_slot5tb_1y_bhf",
-      "name": "SLOT GEMINI PRO + 5TB 12 THÁNG KBH",
-      "price": 120000,
+      "id": "leonardo_essential_1m_bhf",
+      "name": "LEONARDO AI ESSENTIAL 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Slot Gemini Pro + 15TB sử dụng 12 tháng. Không bảo hành"
+      "description": "Tài khoản Leonardo AI Essential 1 tháng. Thời hạn bảo hành full thời gian sử dung"
     },
     {
       "id": "freepik_pre_30d_bh14d",
@@ -246,11 +246,11 @@
       "description": "CODE QUÀ TẶNG NGẪU NHIÊN CỦA XBOX \r\n📌 Đổi mã gift tại đây : https://www.xbox.com/en-IN/redeem\r\n📌 Quà thẻ tặng ngẫu nhiên tỉ lệ cao về game : Diablo, Gta5 , Horizone, Minecraft, Fifa, Call of duty ,..,... rất nhiều game khác - Vật dụng hiếm game - mệnh giá nạp tiền 10$ - 100$\r\n📌 Sau khi nhận mã - truy cập vào link - bấm mã nhận - và bấm Redeem để nhận về tài khoản xbox của bạn\r\n📌đọc kĩ trước khi mua hàng !"
     },
     {
-      "id": "xbox_giftcode_random_1m_bh1d",
-      "name": "GIFT XBOX RANDOM 1 THÁNG BH 1 NGÀY",
-      "price": 35000,
+      "id": "elsa_premium_1m_bhf",
+      "name": "ELSA SPEAK PREMIUM 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "Redeem tại: https://www.xbox.com/en-IN/redeem"
+      "description": "Tài khoản Elsa Speak Premium 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
       "id": "xbox_game_ult_1y_bh30d",
@@ -281,11 +281,11 @@
       "description": "GÓI CAVAN PRO 12 THÁNG . BẢO HÀNH FULL \r\n• SAU KHI THANH TOÁN GỬI GMAIL \r\n• LOGIN TẠI WEB \" https://www.canva.com/ \r\n📧 Vui lòng nhập email để nhận slot (mỗi dòng 1 email).\r\n💡 Số lượng sẽ được tính tự động theo số email bạn nhập.\r\n\r\nVí dụ:\r\nuser1@gmail.com\r\nuser2@gmail.com"
     },
     {
-      "id": "canva_pro_fam_50slot_bh1y",
-      "name": "FAM CANVA PRO 50 SLOT BH 1 NĂM",
-      "price": 1800000,
+      "id": "nordvpn_pre_1m_bhf",
+      "name": "NORD VPN PREMIUM 1 THÁNG BHF",
+      "price": 79000,
       "emoji": "✅",
-      "description": "ADMIN CANVA PRO 50 SLOT"
+      "description": "Tài khoản Nord VPN Premium 1 tháng. Thời hạn bảo hành full thời gian sử dụng"
     },
     {
       "id": "mic365_slot_pre_1y",
