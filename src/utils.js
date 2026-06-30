@@ -35,6 +35,22 @@ function money(amount) {
   return Number(amount).toLocaleString('vi-VN') + 'đ';
 }
 
+// Định dạng ngắn cho thẻ sản phẩm: 275000 -> "275k", 1200000 -> "1.2tr"
+function moneyShort(amount) {
+  const n = Number(amount);
+  if (n >= 1_000_000) {
+    const tr = n / 1_000_000;
+    const s = tr % 1 === 0 ? String(tr) : tr.toFixed(1).replace(/\.0$/, '');
+    return `${s}tr`;
+  }
+  if (n >= 1_000) {
+    const k = n / 1_000;
+    const s = k % 1 === 0 ? String(k) : k.toFixed(1).replace(/\.0$/, '');
+    return `${s}k`;
+  }
+  return `${n}đ`;
+}
+
 function escapeHtml(text) {
   return String(text)
     .replace(/&/g, '&amp;')
@@ -63,4 +79,4 @@ function randomTransferContent() {
   return `${pick(HO)} ${pick(TEN)}${suffix}`.slice(0, 25);
 }
 
-module.exports = { bankName, money, escapeHtml, randomTransferContent };
+module.exports = { bankName, money, moneyShort, escapeHtml, randomTransferContent };

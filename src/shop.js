@@ -2,7 +2,7 @@ const fs = require('fs');
 const { Markup } = require('telegraf');
 const store = require('./store');
 const payos = require('./payos');
-const { money, bankName, escapeHtml, randomTransferContent } = require('./utils');
+const { money, moneyShort, bankName, escapeHtml, randomTransferContent } = require('./utils');
 const kb = require('./keyboards');
 
 const ORDER_TTL_MS = 15 * 60 * 1000; // 15 phút
@@ -284,14 +284,8 @@ function registerShop(bot) {
 
     userStates.set(ctx.from.id, { action: 'awaiting_quantity', productId });
 
-    const caption =
-      `${product.emoji || '📦'} <b>${escapeHtml(product.name)}</b>\n` +
-      `💵 Đơn giá: <b>${money(product.price)}</b>\n` +
-      `📦 Còn lại: <b>${stock}</b>\n` +
-      (product.description ? `\nℹ️ ${escapeHtml(product.description)}\n` : '') +
-      `\n🔢 Vui lòng <b>nhập số lượng</b> bạn muốn mua (gửi 1 con số):`;
-
-    await sendProductCard(ctx, product, caption);
+    const sold = store.soldCount(productId);
+    await sendProductCard(ctx, product, stock, sold);
   });
 
   // ---- Nạp tiền vào ví ----
@@ -408,41 +402,79 @@ function registerShop(bot) {
 
 // ---------------- Hiển thị danh sách sản phẩm ----------------
 
-// Gửi "thẻ sản phẩm": ảnh ở trên + thông tin/caption ở dưới.
-// Ảnh lấy từ product.image (URL) hoặc file cục bộ data/images/<id>.(jpg|png|...).
-// Nếu không có ảnh, hoặc gửi ảnh lỗi -> tự fallback về tin nhắn chữ.
-async function sendProductCard(ctx, product, caption) {
-  // Xác định nguồn ảnh
+// Caption thẻ sản phẩm (giống mẫu: giá, tồn kho, đã bán, mô tả blockquote)
+function buildProductCardCaption(product, stock, sold, { includePrompt = true } = {}) {
+  const emoji = product.emoji || '📦';
+  const desc = product.description
+    ? escapeHtml(product.description).replace(/\r\n/g, '\n').replace(/\n/g, '\n')
+    : '';
+
+  let text =
+    `${emoji} <b>${escapeHtml(product.name)}</b>\n\n` +
+    `💵 Giá: <b>${moneyShort(product.price)}</b>\n` +
+    `➕ Tồn kho: <b>${stock}</b> tài khoản\n` +
+    `📊 Đã bán: <b>${sold}</b> tài khoản`;
+
+  if (desc) {
+    text += `\n\n<blockquote>❞ Mô tả:\n💎 Mô tả:\n${desc}`;
+    if (product.features) {
+      text += `\n\nTính năng:\n${escapeHtml(product.features)}`;
+    }
+    text += `</blockquote>`;
+  } else if (product.features) {
+    text += `\n\n<blockquote>Tính năng:\n${escapeHtml(product.features)}</blockquote>`;
+  }
+
+  if (includePrompt) {
+    text += `\n\n🔢 Vui lòng <b>nhập số lượng</b> bạn muốn mua (gửi 1 con số):`;
+  }
+
+  return text;
+}
+
+// Gửi "thẻ sản phẩm": ảnh ở trên + caption ở dưới (giống mẫu).
+async function sendProductCard(ctx, product, stock, sold) {
+  const fullCaption = buildProductCardCaption(product, stock, sold);
+  const headerCaption = buildProductCardCaption(product, stock, sold, { includePrompt: false });
+
   let photo = null;
   if (product.image && /^https?:\/\//i.test(product.image)) {
-    photo = product.image; // URL trực tiếp
+    photo = product.image;
   } else {
     const localFile = store.productImage(product.id);
     if (localFile) photo = { source: fs.createReadStream(localFile) };
   }
 
   if (!photo) {
-    return ctx.replyWithHTML(caption);
+    return ctx.replyWithHTML(fullCaption);
   }
 
-  // Caption ảnh của Telegram giới hạn 1024 ký tự.
-  // Nếu dài hơn, gửi ảnh với caption ngắn rồi gửi phần còn lại bằng tin nhắn riêng.
+  const prompt = `\n\n🔢 Vui lòng <b>nhập số lượng</b> bạn muốn mua (gửi 1 con số):`;
+
   try {
-    if (caption.length <= 1024) {
-      await ctx.replyWithPhoto(photo, { caption, parse_mode: 'HTML' });
-    } else {
-      const shortCaption =
-        `${product.emoji || '📦'} <b>${escapeHtml(product.name)}</b>\n` +
-        `💵 Đơn giá: <b>${money(product.price)}</b>`;
-      await ctx.replyWithPhoto(photo, {
-        caption: shortCaption,
-        parse_mode: 'HTML',
-      });
-      await ctx.replyWithHTML(caption);
+    if (fullCaption.length <= 1024) {
+      await ctx.replyWithPhoto(photo, { caption: fullCaption, parse_mode: 'HTML' });
+      return;
     }
+
+    // Caption quá dài -> ảnh kèm phần đầu, tin nhắn riêng cho mô tả + nhập số lượng
+    await ctx.replyWithPhoto(photo, { caption: headerCaption, parse_mode: 'HTML' });
+
+    const desc = product.description
+      ? escapeHtml(product.description).replace(/\r\n/g, '\n')
+      : '';
+    let detail = '';
+    if (desc) {
+      detail = `<blockquote>❞ Mô tả:\n💎 Mô tả:\n${desc}`;
+      if (product.features) detail += `\n\nTính năng:\n${escapeHtml(product.features)}`;
+      detail += `</blockquote>`;
+    } else if (product.features) {
+      detail = `<blockquote>Tính năng:\n${escapeHtml(product.features)}</blockquote>`;
+    }
+    await ctx.replyWithHTML(detail + prompt);
   } catch (e) {
     console.error(`[IMG] Không gửi được ảnh cho ${product.id}: ${e.message}`);
-    await ctx.replyWithHTML(caption);
+    await ctx.replyWithHTML(fullCaption);
   }
 }
 

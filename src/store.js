@@ -193,6 +193,13 @@ function getUserOrders(userId) {
   return getOrders().filter((o) => o.userId === userId);
 }
 
+// Tổng số tài khoản đã bán (đơn đã thanh toán) của 1 sản phẩm
+function soldCount(productId) {
+  return getOrders()
+    .filter((o) => o.status === 'paid' && o.productId === productId && o.type !== 'topup')
+    .reduce((sum, o) => sum + (o.quantity || 0), 0);
+}
+
 // ---------- Users / Wallet ----------
 
 function getUsers() {
@@ -299,6 +306,7 @@ module.exports = {
   getOrders,
   getPendingOrders,
   getUserOrders,
+  soldCount,
   getUser,
   getAllUserIds,
   updateUser,
