@@ -414,7 +414,7 @@ function buildProductCardCaption(product, stock, { includePrompt = true } = {}) 
     `➕ Tồn kho: <b>${stock}</b> tài khoản`;
 
   if (desc) {
-    text += `\n\n<blockquote>💎 Mô tả:\n${desc}`;
+    text += `\n\n<blockquote>💎 Mô tả:\n"${desc}"`;
     if (product.features) {
       text += `\n\nTính năng:\n${escapeHtml(product.features)}`;
     }
@@ -463,7 +463,7 @@ async function sendProductCard(ctx, product, stock) {
       : '';
     let detail = '';
     if (desc) {
-      detail = `<blockquote>💎 Mô tả:\n${desc}`;
+      detail = `<blockquote>💎 Mô tả:\n"${desc}"`;
       if (product.features) detail += `\n\nTính năng:\n${escapeHtml(product.features)}`;
       detail += `</blockquote>`;
     } else if (product.features) {
