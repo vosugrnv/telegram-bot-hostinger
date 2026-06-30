@@ -284,8 +284,7 @@ function registerShop(bot) {
 
     userStates.set(ctx.from.id, { action: 'awaiting_quantity', productId });
 
-    const sold = store.soldCount(productId);
-    await sendProductCard(ctx, product, stock, sold);
+    await sendProductCard(ctx, product, stock);
   });
 
   // ---- Nạp tiền vào ví ----
@@ -403,7 +402,7 @@ function registerShop(bot) {
 // ---------------- Hiển thị danh sách sản phẩm ----------------
 
 // Caption thẻ sản phẩm (giống mẫu: giá, tồn kho, đã bán, mô tả blockquote)
-function buildProductCardCaption(product, stock, sold, { includePrompt = true } = {}) {
+function buildProductCardCaption(product, stock, { includePrompt = true } = {}) {
   const emoji = product.emoji || '📦';
   const desc = product.description
     ? escapeHtml(product.description).replace(/\r\n/g, '\n').replace(/\n/g, '\n')
@@ -412,8 +411,7 @@ function buildProductCardCaption(product, stock, sold, { includePrompt = true } 
   let text =
     `${emoji} <b>${escapeHtml(product.name)}</b>\n\n` +
     `💵 Giá: <b>${moneyShort(product.price)}</b>\n` +
-    `➕ Tồn kho: <b>${stock}</b> tài khoản\n` +
-    `📊 Đã bán: <b>${sold}</b> tài khoản`;
+    `➕ Tồn kho: <b>${stock}</b> tài khoản`;
 
   if (desc) {
     text += `\n\n<blockquote>❞ Mô tả:\n💎 Mô tả:\n${desc}`;
@@ -433,9 +431,9 @@ function buildProductCardCaption(product, stock, sold, { includePrompt = true } 
 }
 
 // Gửi "thẻ sản phẩm": ảnh ở trên + caption ở dưới (giống mẫu).
-async function sendProductCard(ctx, product, stock, sold) {
-  const fullCaption = buildProductCardCaption(product, stock, sold);
-  const headerCaption = buildProductCardCaption(product, stock, sold, { includePrompt: false });
+async function sendProductCard(ctx, product, stock) {
+  const fullCaption = buildProductCardCaption(product, stock);
+  const headerCaption = buildProductCardCaption(product, stock, { includePrompt: false });
 
   let photo = null;
   if (product.image && /^https?:\/\//i.test(product.image)) {
