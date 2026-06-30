@@ -1,3 +1,4 @@
+const fs = require('fs');
 const { Markup } = require('telegraf');
 const store = require('./store');
 const payos = require('./payos');
@@ -282,13 +283,15 @@ function registerShop(bot) {
     }
 
     userStates.set(ctx.from.id, { action: 'awaiting_quantity', productId });
-    await ctx.replyWithHTML(
+
+    const caption =
       `${product.emoji || '📦'} <b>${escapeHtml(product.name)}</b>\n` +
-        `💵 Đơn giá: <b>${money(product.price)}</b>\n` +
-        `📦 Còn lại: <b>${stock}</b>\n` +
-        (product.description ? `\nℹ️ ${escapeHtml(product.description)}\n` : '') +
-        `\n🔢 Vui lòng <b>nhập số lượng</b> bạn muốn mua (gửi 1 con số):`
-    );
+      `💵 Đơn giá: <b>${money(product.price)}</b>\n` +
+      `📦 Còn lại: <b>${stock}</b>\n` +
+      (product.description ? `\nℹ️ ${escapeHtml(product.description)}\n` : '') +
+      `\n🔢 Vui lòng <b>nhập số lượng</b> bạn muốn mua (gửi 1 con số):`;
+
+    await sendProductCard(ctx, product, caption);
   });
 
   // ---- Nạp tiền vào ví ----
@@ -404,6 +407,44 @@ function registerShop(bot) {
 }
 
 // ---------------- Hiển thị danh sách sản phẩm ----------------
+
+// Gửi "thẻ sản phẩm": ảnh ở trên + thông tin/caption ở dưới.
+// Ảnh lấy từ product.image (URL) hoặc file cục bộ data/images/<id>.(jpg|png|...).
+// Nếu không có ảnh, hoặc gửi ảnh lỗi -> tự fallback về tin nhắn chữ.
+async function sendProductCard(ctx, product, caption) {
+  // Xác định nguồn ảnh
+  let photo = null;
+  if (product.image && /^https?:\/\//i.test(product.image)) {
+    photo = product.image; // URL trực tiếp
+  } else {
+    const localFile = store.productImage(product.id);
+    if (localFile) photo = { source: fs.createReadStream(localFile) };
+  }
+
+  if (!photo) {
+    return ctx.replyWithHTML(caption);
+  }
+
+  // Caption ảnh của Telegram giới hạn 1024 ký tự.
+  // Nếu dài hơn, gửi ảnh với caption ngắn rồi gửi phần còn lại bằng tin nhắn riêng.
+  try {
+    if (caption.length <= 1024) {
+      await ctx.replyWithPhoto(photo, { caption, parse_mode: 'HTML' });
+    } else {
+      const shortCaption =
+        `${product.emoji || '📦'} <b>${escapeHtml(product.name)}</b>\n` +
+        `💵 Đơn giá: <b>${money(product.price)}</b>`;
+      await ctx.replyWithPhoto(photo, {
+        caption: shortCaption,
+        parse_mode: 'HTML',
+      });
+      await ctx.replyWithHTML(caption);
+    }
+  } catch (e) {
+    console.error(`[IMG] Không gửi được ảnh cho ${product.id}: ${e.message}`);
+    await ctx.replyWithHTML(caption);
+  }
+}
 
 async function showProducts(ctx) {
   const products = store.getProducts();

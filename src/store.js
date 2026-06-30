@@ -20,6 +20,7 @@ function resolveDataDir() {
 
 const DATA_DIR = resolveDataDir();
 const ACCOUNTS_DIR = path.join(DATA_DIR, 'accounts');
+const IMAGES_DIR = path.join(DATA_DIR, 'images');
 const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
 const ORDERS_FILE = path.join(DATA_DIR, 'orders.json');
 const USERS_FILE = path.join(DATA_DIR, 'users.json');
@@ -33,6 +34,7 @@ console.log(`[INFO] products.json tồn tại: ${fs.existsSync(PRODUCTS_FILE)}`)
 function ensureDirs() {
   if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
   if (!fs.existsSync(ACCOUNTS_DIR)) fs.mkdirSync(ACCOUNTS_DIR, { recursive: true });
+  if (!fs.existsSync(IMAGES_DIR)) fs.mkdirSync(IMAGES_DIR, { recursive: true });
 }
 
 function readJson(file, fallback) {
@@ -62,6 +64,17 @@ function getProducts() {
 
 function getProduct(productId) {
   return getProducts().find((p) => p.id === productId) || null;
+}
+
+// Tìm ảnh sản phẩm trong data/images/. Trả về đường dẫn file cục bộ nếu có,
+// hỗ trợ các đuôi phổ biến: .jpg .jpeg .png .webp. Không có thì trả về null.
+function productImage(productId) {
+  if (!fs.existsSync(IMAGES_DIR)) return null;
+  for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
+    const file = path.join(IMAGES_DIR, `${productId}.${ext}`);
+    if (fs.existsSync(file)) return file;
+  }
+  return null;
 }
 
 // ---------- Account stock (text files) ----------
@@ -274,6 +287,7 @@ module.exports = {
   clearState,
   getProducts,
   getProduct,
+  productImage,
   physicalStock,
   availableStock,
   popAccounts,
