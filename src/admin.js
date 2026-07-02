@@ -2,18 +2,21 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const { URL } = require('url');
-const store = require('./store');
+const { createStore } = require('./store');
+const botsConfig = require('./bots-config');
 
 const COOKIE_NAME = 'admin_session';
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
 const BODY_LIMIT = 5 * 1024 * 1024;
+
+const storeCache = new Map();
 
 function adminPassword() {
   return process.env.ADMIN_PASSWORD || '';
 }
 
 function sessionSecret() {
-  return `${adminPassword()}::${process.env.BOT_TOKEN || ''}`;
+  return `${adminPassword()}::${process.env.BOT_TOKEN || 'multi-bot-admin'}`;
 }
 
 function hmac(value) {
@@ -117,12 +120,30 @@ function sanitizeProduct(input) {
       id,
       name,
       price: Math.round(price),
-      emoji: String(input.emoji || '??').trim() || '??',
+      emoji: String(input.emoji || '?').trim() || '?',
       description: String(input.description || '').trim(),
       features: String(input.features || '').trim(),
       image: String(input.image || '').trim(),
     },
   };
+}
+
+function getStoreForBot(botId) {
+  const bot = botsConfig.getBot(botId);
+  if (!bot) return { error: 'Bot không t?n t?i', status: 404 };
+
+  if (!storeCache.has(bot.dataDir)) {
+    storeCache.set(bot.dataDir, createStore(bot.dataDir));
+  }
+
+  return { bot, store: storeCache.get(bot.dataDir) };
+}
+
+function resolveBotId(u) {
+  const fromQuery = (u.searchParams.get('bot') || '').trim();
+  if (fromQuery) return fromQuery;
+  if (botsConfig.getBots().length === 1) return botsConfig.defaultBotId();
+  return '';
 }
 
 function renderAdminPage() {
@@ -141,12 +162,12 @@ async function handleAsync(req, res) {
 
   if (pathname === '/admin/login' && req.method === 'POST') {
     if (!adminPassword()) {
-      sendJson(res, 400, { error: 'ADMIN_PASSWORD chua c?u hình' });
+      sendJson(res, 400, { error: 'ADMIN_PASSWORD ch?a c?u hình' });
       return;
     }
     const body = parseJson(await readBody(req));
     if (!body || body.password !== adminPassword()) {
-      sendJson(res, 401, { error: 'M?t kh?u không dúng' });
+      sendJson(res, 401, { error: 'M?t kh?u không ?úng' });
       return;
     }
     const token = makeSessionToken();
@@ -164,17 +185,43 @@ async function handleAsync(req, res) {
   }
 
   if (pathname === '/admin/api/session' && req.method === 'GET') {
+    const bots = botsConfig.getBots().map((b) => ({ id: b.id, name: b.name }));
     sendJson(res, 200, {
       configured: Boolean(adminPassword()),
       authenticated: isAuthenticated(req),
+      multiBot: bots.length > 1,
+      bots,
+      defaultBot: botsConfig.defaultBotId(),
     });
     return;
   }
 
   if (!isAuthenticated(req)) {
-    sendJson(res, 401, { error: 'Chua dang nh?p' });
+    sendJson(res, 401, { error: 'Ch?a ??ng nh?p' });
     return;
   }
+
+  if (pathname === '/admin/api/bots' && req.method === 'GET') {
+    sendJson(res, 200, {
+      bots: botsConfig.getBots().map((b) => ({ id: b.id, name: b.name })),
+      defaultBot: botsConfig.defaultBotId(),
+    });
+    return;
+  }
+
+  const botId = resolveBotId(u);
+  if (!botId) {
+    sendJson(res, 400, { error: 'Thi?u tham s? bot. Ch?n bot trên giao di?n admin.' });
+    return;
+  }
+
+  const resolved = getStoreForBot(botId);
+  if (resolved.error) {
+    sendJson(res, resolved.status || 400, { error: resolved.error });
+    return;
+  }
+
+  const store = resolved.store;
 
   if (pathname === '/admin/api/products' && req.method === 'GET') {
     const products = store.getProducts().map((p) => ({
@@ -183,7 +230,7 @@ async function handleAsync(req, res) {
       availableStock: store.availableStock(p.id),
       imagePath: store.productImage(p.id),
     }));
-    sendJson(res, 200, { products });
+    sendJson(res, 200, { botId, products });
     return;
   }
 
@@ -197,11 +244,11 @@ async function handleAsync(req, res) {
 
     const added = store.addProduct(parsed.product);
     if (!added) {
-      sendJson(res, 409, { error: 'ID dã t?n t?i' });
+      sendJson(res, 409, { error: 'ID ?ã t?n t?i' });
       return;
     }
 
-    sendJson(res, 200, { product: added });
+    sendJson(res, 200, { botId, product: added });
     return;
   }
 
@@ -217,7 +264,7 @@ async function handleAsync(req, res) {
     const patch = {
       name: String(body.name || '').trim(),
       price: Number(body.price),
-      emoji: String(body.emoji || '??').trim() || '??',
+      emoji: String(body.emoji || '?').trim() || '?',
       description: String(body.description || '').trim(),
       features: String(body.features || '').trim(),
       image: String(body.image || '').trim(),
@@ -233,7 +280,7 @@ async function handleAsync(req, res) {
       return;
     }
 
-    sendJson(res, 200, { product: updated });
+    sendJson(res, 200, { botId, product: updated });
     return;
   }
 
@@ -244,7 +291,7 @@ async function handleAsync(req, res) {
       sendJson(res, 404, { error: 'Không tìm th?y s?n ph?m' });
       return;
     }
-    sendJson(res, 200, { ok: true });
+    sendJson(res, 200, { botId, ok: true });
     return;
   }
 
@@ -252,7 +299,7 @@ async function handleAsync(req, res) {
   if (stockMatch && req.method === 'GET') {
     const id = decodeURIComponent(stockMatch[1]);
     const lines = store.readAccountLines(id);
-    sendJson(res, 200, { id, count: lines.length, lines });
+    sendJson(res, 200, { botId, id, count: lines.length, lines });
     return;
   }
 
@@ -276,7 +323,7 @@ async function handleAsync(req, res) {
     }
 
     const count = store.readAccountLines(id).length;
-    sendJson(res, 200, { ok: true, count });
+    sendJson(res, 200, { botId, ok: true, count });
     return;
   }
 
@@ -292,11 +339,11 @@ async function handleAsync(req, res) {
     const buffer = Buffer.from(body.dataBase64, 'base64');
     const saved = store.saveProductImage(id, body.ext, buffer);
     if (!saved) {
-      sendJson(res, 400, { error: 'Ð?nh d?ng ?nh không h? tr?' });
+      sendJson(res, 400, { error: '??nh d?ng ?nh không h? tr?' });
       return;
     }
 
-    sendJson(res, 200, { ok: true, path: saved });
+    sendJson(res, 200, { botId, ok: true, path: saved });
     return;
   }
 
@@ -316,7 +363,7 @@ async function handleAsync(req, res) {
         };
       });
 
-    sendJson(res, 200, { orders });
+    sendJson(res, 200, { botId, orders });
     return;
   }
 

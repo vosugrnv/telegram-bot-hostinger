@@ -16,6 +16,9 @@
     .hidden{display:none}
     .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
     .ok{color:#22c55e}.err{color:#f87171}.muted{color:#94a3b8}
+    .bot-bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .bot-bar select{min-width:260px}
+    .bot-label{font-weight:bold}
   </style>
 </head>
 <body>
@@ -23,18 +26,24 @@
   <h2>Admin Web Panel</h2>
 
   <div id="loginCard" class="card hidden">
-    <h3>Ðang nh?p qu?n tr?</h3>
+    <h3>??ng nh?p qu?n tr?</h3>
     <input id="password" type="password" placeholder="Nh?p ADMIN_PASSWORD" />
-    <button onclick="login()">Ðang nh?p</button>
+    <button onclick="login()">??ng nh?p</button>
     <div id="loginMsg" class="muted"></div>
   </div>
 
   <div id="app" class="hidden">
+    <div class="card bot-bar">
+      <span class="bot-label">Bot ?ang qu?n l?:</span>
+      <select id="botSelect" onchange="onBotChange()"></select>
+      <span id="botHint" class="muted"></span>
+      <button onclick="logout()" style="margin-left:auto">??ng xu?t</button>
+    </div>
+
     <div class="card tabs">
       <button onclick="showTab('products')">S?n ph?m</button>
       <button onclick="showTab('stock')">Kho</button>
-      <button onclick="showTab('orders')">Ðon hàng</button>
-      <button onclick="logout()" style="float:right">Ðang xu?t</button>
+      <button onclick="showTab('orders')">??n h?ng</button>
     </div>
 
     <div id="msg" class="card muted"></div>
@@ -43,34 +52,34 @@
       <h3>S?n ph?m</h3>
       <div class="row">
         <input id="p_id" placeholder="id (vd: netflix_pre_1m_bhf)" />
-        <input id="p_name" placeholder="Tên s?n ph?m" />
-        <input id="p_price" type="number" placeholder="Giá" />
-        <input id="p_emoji" placeholder="Emoji" value="??" />
+        <input id="p_name" placeholder="T?n s?n ph?m" />
+        <input id="p_price" type="number" placeholder="Gi?" />
+        <input id="p_emoji" placeholder="Emoji" value="?" />
       </div>
-      <textarea id="p_desc" placeholder="Mô t?"></textarea>
-      <textarea id="p_features" placeholder="Tính nang (không b?t bu?c)"></textarea>
-      <input id="p_image" placeholder="Image URL (không b?t bu?c)" />
-      <div style="margin-top:8px"><button onclick="createProduct()">Thêm s?n ph?m</button></div>
+      <textarea id="p_desc" placeholder="M? t?"></textarea>
+      <textarea id="p_features" placeholder="T?nh n?ng (kh?ng b?t bu?c)"></textarea>
+      <input id="p_image" placeholder="Image URL (kh?ng b?t bu?c)" />
+      <div style="margin-top:8px"><button onclick="createProduct()">Th?m s?n ph?m</button></div>
       <table id="productsTable"></table>
     </div>
 
     <div id="tab-stock" class="card hidden">
-      <h3>Kho tài kho?n</h3>
+      <h3>Kho t?i kho?n</h3>
       <select id="stockProduct"></select>
       <input id="imageFile" type="file" accept="image/png,image/jpeg,image/webp" />
-      <button onclick="uploadImage()">Upload ?nh cho s?n ph?m dang ch?n</button>
-      <p class="muted">Dán danh sách tài kho?n, m?i dòng 1 tài kho?n.</p>
+      <button onclick="uploadImage()">Upload ?nh cho s?n ph?m ?ang ch?n</button>
+      <p class="muted">D?n danh s?ch t?i kho?n, m?i d?ng 1 t?i kho?n.</p>
       <textarea id="stockLines" placeholder="mail|pass"></textarea>
       <div>
-        <button onclick="saveStock('append')">Thêm ti?p</button>
-        <button onclick="saveStock('replace')">Ghi dè</button>
+        <button onclick="saveStock('append')">Th?m ti?p</button>
+        <button onclick="saveStock('replace')">Ghi ??</button>
         <button onclick="loadStock()">T?i kho hi?n t?i</button>
       </div>
       <pre id="stockPreview" class="muted"></pre>
     </div>
 
     <div id="tab-orders" class="card hidden">
-      <h3>Ðon hàng</h3>
+      <h3>??n h?ng</h3>
       <select id="orderFilter" onchange="loadOrders()">
         <option value="">T?t c?</option>
         <option value="pending">pending</option>
@@ -83,7 +92,7 @@
 </div>
 
 <script>
-const state = { products: [] };
+const state = { products: [], bots: [], botId: '' };
 
 function setMsg(msg, ok = true) {
   const e = document.getElementById('msg');
@@ -97,29 +106,67 @@ function showTab(name) {
   if (name === 'orders') loadOrders();
 }
 
+function withBot(path) {
+  const sep = path.includes('?') ? '&' : '?';
+  return path + sep + 'bot=' + encodeURIComponent(state.botId);
+}
+
 async function api(path, opt = {}) {
-  const res = await fetch(path, {
+  const needsBot = path.startsWith('/admin/api/') &&
+    path !== '/admin/api/session' &&
+    path !== '/admin/api/bots';
+  const url = needsBot ? withBot(path) : path;
+
+  const res = await fetch(url, {
     credentials: 'include',
     headers: { 'Content-Type': 'application/json' },
     ...opt,
   });
-  if (res.status === 401) throw new Error('Chua dang nh?p');
+  if (res.status === 401) throw new Error('Ch?a ??ng nh?p');
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
   return data;
 }
 
+function renderBotSelect() {
+  const sel = document.getElementById('botSelect');
+  sel.innerHTML = state.bots.map((b) =>
+    '<option value="' + esc(b.id) + '">' + esc(b.name) + ' (' + esc(b.id) + ')</option>'
+  ).join('');
+  if (state.botId) sel.value = state.botId;
+
+  const hint = document.getElementById('botHint');
+  hint.textContent = state.bots.length > 1
+    ? 'M?i thao t?c ?p d?ng cho bot ?ang ch?n'
+    : '';
+}
+
+function onBotChange() {
+  state.botId = document.getElementById('botSelect').value;
+  localStorage.setItem('admin_bot_id', state.botId);
+  loadProducts();
+  const activeTab = ['products','stock','orders'].find((t) => !document.getElementById('tab-' + t).classList.contains('hidden'));
+  if (activeTab === 'orders') loadOrders();
+}
+
 async function bootstrap() {
   const s = await api('/admin/api/session');
   if (!s.configured) {
-    document.body.innerHTML = '<div class="wrap"><div class="card err">Chua c?u hình ADMIN_PASSWORD trên server.</div></div>';
+    document.body.innerHTML = '<div class="wrap"><div class="card err">Ch?a c?u h?nh ADMIN_PASSWORD tr?n server.</div></div>';
     return;
   }
+
+  state.bots = s.bots || [];
+  const saved = localStorage.getItem('admin_bot_id');
+  state.botId = (saved && state.bots.some((b) => b.id === saved)) ? saved : (s.defaultBot || state.bots[0]?.id || '');
+
   if (!s.authenticated) {
     document.getElementById('loginCard').classList.remove('hidden');
     return;
   }
+
   document.getElementById('app').classList.remove('hidden');
+  renderBotSelect();
   await loadProducts();
 }
 
@@ -152,7 +199,7 @@ function productForm() {
 async function createProduct() {
   try {
     await api('/admin/api/products', { method: 'POST', body: JSON.stringify(productForm()) });
-    setMsg('Ðã thêm s?n ph?m');
+    setMsg('?? th?m s?n ph?m');
     await loadProducts();
   } catch (e) {
     setMsg(e.message, false);
@@ -171,7 +218,7 @@ async function updateProduct(id) {
   };
   try {
     await api('/admin/api/products/' + encodeURIComponent(id), { method: 'PUT', body: JSON.stringify(payload) });
-    setMsg('Ðã c?p nh?t ' + id);
+    setMsg('?? c?p nh?t ' + id);
     await loadProducts();
   } catch (e) {
     setMsg(e.message, false);
@@ -179,10 +226,10 @@ async function updateProduct(id) {
 }
 
 async function deleteProduct(id) {
-  if (!confirm('Xóa ' + id + '?')) return;
+  if (!confirm('X?a ' + id + '?')) return;
   try {
     await api('/admin/api/products/' + encodeURIComponent(id), { method: 'DELETE' });
-    setMsg('Ðã xóa ' + id);
+    setMsg('?? x?a ' + id);
     await loadProducts();
   } catch (e) {
     setMsg(e.message, false);
@@ -190,6 +237,10 @@ async function deleteProduct(id) {
 }
 
 async function loadProducts() {
+  if (!state.botId) {
+    setMsg('Ch?a ch?n bot', false);
+    return;
+  }
   try {
     const data = await api('/admin/api/products');
     state.products = data.products || [];
@@ -204,12 +255,12 @@ async function loadProducts() {
         '<textarea class="features">' + esc(p.features || '') + '</textarea>' +
         '<input class="image" value="' + esc(p.image || '') + '" /></td>' +
         '<td>' + p.stock + '</td>' +
-        '<td><button onclick="updateProduct(\'' + escJs(p.id) + '\')">Luu</button> ' +
-        '<button onclick="deleteProduct(\'' + escJs(p.id) + '\')">Xóa</button></td>' +
+        '<td><button onclick="updateProduct(\'' + escJs(p.id) + '\')">L?u</button> ' +
+        '<button onclick="deleteProduct(\'' + escJs(p.id) + '\')">X?a</button></td>' +
       '</tr>';
     }).join('');
 
-    table.innerHTML = '<tr><th>ID</th><th>Tên/Giá</th><th>Mô t?</th><th>Kho</th><th>Actions</th></tr>' + rows;
+    table.innerHTML = '<tr><th>ID</th><th>T?n/Gi?</th><th>M? t?</th><th>Kho</th><th>Actions</th></tr>' + rows;
 
     const sel = document.getElementById('stockProduct');
     sel.innerHTML = state.products.map((p) => '<option value="' + esc(p.id) + '">' + esc(p.id + ' - ' + p.name) + '</option>').join('');
@@ -224,7 +275,7 @@ async function loadStock() {
     const id = stockProduct.value;
     if (!id) return;
     const d = await api('/admin/api/stock/' + encodeURIComponent(id));
-    stockPreview.textContent = 'S? dòng: ' + d.count + '\n\n' + (d.lines || []).join('\n');
+    stockPreview.textContent = 'S? d?ng: ' + d.count + '\n\n' + (d.lines || []).join('\n');
   } catch (e) {
     setMsg(e.message, false);
   }
@@ -238,7 +289,7 @@ async function saveStock(mode) {
       method: 'POST',
       body: JSON.stringify({ mode, lines }),
     });
-    setMsg('Ðã luu kho ' + id + ' (' + d.count + ' dòng)');
+    setMsg('?? l?u kho ' + id + ' (' + d.count + ' d?ng)');
     await loadProducts();
   } catch (e) {
     setMsg(e.message, false);
@@ -259,7 +310,7 @@ async function uploadImage() {
     const id = stockProduct.value;
     const file = imageFile.files[0];
     if (!id || !file) {
-      setMsg('Ch?n s?n ph?m và file ?nh', false);
+      setMsg('Ch?n s?n ph?m v? file ?nh', false);
       return;
     }
 
@@ -274,16 +325,18 @@ async function uploadImage() {
       method: 'POST',
       body: JSON.stringify({ ext, dataBase64 }),
     });
-    setMsg('Ðã upload ?nh cho ' + id);
+    setMsg('?? upload ?nh cho ' + id);
   } catch (e) {
     setMsg(e.message, false);
   }
 }
 
 async function loadOrders() {
+  if (!state.botId) return;
   try {
     const status = orderFilter.value;
-    const d = await api('/admin/api/orders' + (status ? ('?status=' + encodeURIComponent(status)) : ''));
+    const q = status ? ('?status=' + encodeURIComponent(status)) : '';
+    const d = await api('/admin/api/orders' + q);
     const table = document.getElementById('ordersTable');
     const rows = (d.orders || []).map((o) => {
       const delivered = (o.delivered || []).join('\n');
@@ -297,14 +350,14 @@ async function loadOrders() {
         '<td>' + esc(o.status || '-') + '</td>' +
       '</tr>';
     }).join('');
-    table.innerHTML = '<tr><th>Mã don</th><th>S?n ph?m</th><th>Khách mua</th><th>Giá tr?</th><th>Th?i gian</th><th>Chi ti?t dã giao</th><th>Tr?ng thái</th></tr>' + rows;
+    table.innerHTML = '<tr><th>M? ??n</th><th>S?n ph?m</th><th>Kh?ch mua</th><th>Gi? tr?</th><th>Th?i gian</th><th>Chi ti?t ?? giao</th><th>Tr?ng th?i</th></tr>' + rows;
   } catch (e) {
     setMsg(e.message, false);
   }
 }
 
 function fmtMoney(v) {
-  return Number(v || 0).toLocaleString('vi-VN') + 'd';
+  return Number(v || 0).toLocaleString('vi-VN') + '?';
 }
 
 function fmtTs(ts) {

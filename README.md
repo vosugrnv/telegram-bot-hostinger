@@ -48,6 +48,7 @@ cp .env.example .env
 | `SUPPORT_CONTACT` | | Liên hệ hỗ trợ (vd `@admin`) |
 | `ADMIN_PASSWORD` | ✅* | Mật khẩu đăng nhập trang quản trị `/admin` |
 | `DATA_DIR` | | Đường dẫn thư mục data bền vững (khuyến nghị đặt ngoài thư mục app) |
+| `BOTS_CONFIG` | | JSON danh sách bot cho admin đa bot: `[{id,name,dataDir},...]` |
 | `PAYOS_CLIENT_ID` | ✅* | PayOS → Kênh thanh toán → Thông tin xác thực |
 | `PAYOS_API_KEY` | ✅* | |
 | `PAYOS_CHECKSUM_KEY` | ✅* | |
@@ -107,10 +108,31 @@ npm start
 
 - URL: `https://<domain>/admin`
 - Đăng nhập bằng `ADMIN_PASSWORD`
+- **Một trang admin** quản lý toàn bộ: sản phẩm, kho tài khoản, đơn hàng (tên hàng, chi tiết acc đã giao, giá trị, thời gian, khách mua)
 - Chức năng:
   - Tab **Sản phẩm**: thêm/sửa/xóa sản phẩm
   - Tab **Kho**: thêm tiếp hoặc ghi đè tài khoản theo từng sản phẩm, upload ảnh
   - Tab **Đơn hàng**: xem mã đơn, khách mua, sản phẩm, số lượng, giá trị, thời gian, tài khoản đã giao
+
+### Quản lý nhiều bot Telegram
+
+Mỗi bot vẫn chạy **process riêng** (mỗi app có `BOT_TOKEN` + `DATA_DIR` riêng). Trang admin trung tâm đọc/ghi trực tiếp vào thư mục data của từng bot.
+
+1. Tạo thư mục data riêng cho mỗi bot, ví dụ:
+   - `/home/<user>/bot-data-shop1`
+   - `/home/<user>/bot-data-shop2`
+2. Trên **một** deployment (admin hub), đặt biến `BOTS_CONFIG` (JSON một dòng):
+
+```json
+[
+  {"id":"shop1","name":"Media AI Hub","dataDir":"/home/<user>/bot-data-shop1"},
+  {"id":"shop2","name":"Shop 2","dataDir":"/home/<user>/bot-data-shop2"}
+]
+```
+
+3. Mở `/admin` → chọn bot ở dropdown → thao tác Sản phẩm / Kho / Đơn hàng cho bot đó.
+
+Nếu chỉ có **1 bot**, không cần `BOTS_CONFIG` — admin tự dùng `DATA_DIR` (hoặc `data/` mặc định).
 
 ## ⚠️ Lưu ý quan trọng về dữ liệu
 
