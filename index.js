@@ -67,8 +67,16 @@ async function startWebhook() {
       return handlePayosWebhook(req, res);
     }
     if (req.url === '/' || req.url === '/health') {
-      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-      res.end(`OK - ${botName} dang chay (webhook)`);
+      const products = store.getProducts();
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({
+        ok: true,
+        bot: botName,
+        mode: 'webhook',
+        dataDir: store.dataDir,
+        productCount: products.length,
+        payosConfigured: payos.isConfigured(),
+      }));
       return;
     }
     if (admin.handle(req, res)) return;
@@ -81,9 +89,23 @@ async function startWebhook() {
   });
 
   const webhookUrl = `${PUBLIC_URL}${secretPath}`;
-  await bot.telegram.setWebhook(webhookUrl, { drop_pending_updates: true });
-  const info = await bot.telegram.getWebhookInfo();
-  console.log(`[OK] Đã đặt Telegram webhook (pending: ${info.pending_update_count})`);
+  const maxRetries = 3;
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      await bot.telegram.setWebhook(webhookUrl, { drop_pending_updates: true });
+      const info = await bot.telegram.getWebhookInfo();
+      console.log(`[OK] Đã đặt Telegram webhook (pending: ${info.pending_update_count})`);
+      break;
+    } catch (err) {
+      const isConflict = err.response?.error_code === 409;
+      if (isConflict && attempt < maxRetries) {
+        console.warn(`[WARN] Telegram webhook conflict. Thử lại ${attempt}/${maxRetries} sau 5 giây...`);
+        await sleep(5000);
+        continue;
+      }
+      throw err;
+    }
+  }
   logStartupInfo('webhook');
   ensureWatcher();
   await registerPayosWebhook();
@@ -133,8 +155,16 @@ function handlePayosWebhook(req, res) {
 function startHealthServer() {
   const server = http.createServer((req, res) => {
     if (req.url === '/' || req.url === '/health') {
-      res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
-      res.end(`OK - ${botName} dang chay (polling)`);
+      const products = store.getProducts();
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({
+        ok: true,
+        bot: botName,
+        mode: 'polling',
+        dataDir: store.dataDir,
+        productCount: products.length,
+        payosConfigured: payos.isConfigured(),
+      }));
       return;
     }
     if (admin.handle(req, res)) return;

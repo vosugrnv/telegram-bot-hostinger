@@ -4,8 +4,14 @@ const path = require('path');
 const STATE_TTL_MS = 30 * 60 * 1000;
 
 function resolveDataDir() {
+  const fromEnv = String(process.env.DATA_DIR || '').trim();
+  if (fromEnv) {
+    // If user explicitly sets DATA_DIR, always honor it.
+    // ensureDirs() will seed missing files there on first run.
+    return path.resolve(fromEnv);
+  }
+
   const candidates = [
-    process.env.DATA_DIR,
     path.join(__dirname, '..', 'data'),
     path.join(process.cwd(), 'data'),
   ].filter(Boolean);
@@ -43,7 +49,7 @@ function createStore(dataDir) {
       return JSON.parse(raw);
     } catch (err) {
       if (err.code !== 'ENOENT') {
-        console.error(`[WARN] Không đọc được ${path.basename(file)}: ${err.message}`);
+        console.error(`[ERROR] Không đọc được ${file}: ${err.message}`);
       }
       return fallback;
     }
@@ -57,6 +63,7 @@ function createStore(dataDir) {
 
   function getProducts() {
     const data = readJson(PRODUCTS_FILE, { products: [] });
+    if (Array.isArray(data)) return data;
     return data.products || [];
   }
 
@@ -357,10 +364,29 @@ function createStore(dataDir) {
 }
 
 const defaultDataDir = resolveDataDir();
-console.log(`[INFO] DATA_DIR = ${defaultDataDir}`);
-console.log(`[INFO] products.json tồn tại: ${fs.existsSync(path.join(defaultDataDir, 'products.json'))}`);
-
 const defaultStore = createStore(defaultDataDir);
+
+function logStoreStartup(dataDir, store) {
+  const productsFile = path.join(dataDir, 'products.json');
+  const exists = fs.existsSync(productsFile);
+  const size = exists ? fs.statSync(productsFile).size : 0;
+  const count = store.getProducts().length;
+  const accountsDir = path.join(dataDir, 'accounts');
+  let accountFiles = 0;
+  if (fs.existsSync(accountsDir)) {
+    accountFiles = fs.readdirSync(accountsDir).filter((f) => !f.startsWith('.')).length;
+  }
+
+  console.log(`[INFO] DATA_DIR = ${dataDir}`);
+  console.log(`[INFO] products.json tồn tại: ${exists} (${size} bytes)`);
+  console.log(`[INFO] Số sản phẩm đọc được: ${count}`);
+  console.log(`[INFO] Số file kho accounts/: ${accountFiles}`);
+  if (exists && size > 200 && count === 0) {
+    console.error('[ERROR] products.json có dữ liệu nhưng không đọc được — kiểm tra JSON hợp lệ (dấu phẩy, ngoặc).');
+  }
+}
+
+logStoreStartup(defaultDataDir, defaultStore);
 
 module.exports = {
   createStore,
